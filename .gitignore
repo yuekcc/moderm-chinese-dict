@@ -4,3 +4,5 @@ node_modules
 
 *.log
 *.exe
+
+/pb_data
