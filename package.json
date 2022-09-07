@@ -1,0 +1,51 @@
+{
+  "name": "modern-chinese-dict",
+  "version": "1.0.0",
+  "main": "node/index.js",
+  "scripts": {
+    "dev": "vite"
+  },
+  "type": "module",
+  "author": "no_name",
+  "license": "MIT",
+  "prettier": {
+    "printWidth": 120,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "arrowParens": "avoid",
+    "endOfLine": "auto"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es2021": true,
+      "jest": true,
+      "node": true
+    },
+    "parserOptions": {
+      "sourceType": "module"
+    },
+    "plugins": [
+      "prettier"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:prettier/recommended"
+    ]
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.1.0",
+    "eslint": "^8.9.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "less": "^4.1.3",
+    "prettier": "^2.5.1",
+    "vite": "^3.1.0",
+    "vue": "^3.2.38"
+  },
+  "dependencies": {
+    "express": "5.0.0-beta.1"
+  }
+}
