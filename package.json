@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "node/index.js",
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "build": "vite build",
+    "server": "node server/index.js"
   },
   "type": "module",
   "author": "no_name",
@@ -36,6 +38,7 @@
     ]
   },
   "devDependencies": {
+    "@vicons/carbon": "^0.12.0",
     "@vitejs/plugin-vue": "^3.1.0",
     "eslint": "^8.9.0",
     "eslint-config-prettier": "^8.3.0",
@@ -46,6 +49,11 @@
     "vue": "^3.2.38"
   },
   "dependencies": {
-    "express": "5.0.0-beta.1"
+    "@node-rs/jieba": "^1.6.1",
+    "better-sqlite3": "^7.6.2",
+    "express": "5.0.0-beta.1",
+    "naive-ui": "^2.33.2",
+    "vfonts": "^0.0.3",
+    "vue-router": "4"
   }
 }
