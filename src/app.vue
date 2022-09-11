@@ -41,8 +41,6 @@ export default {
           word: this.keyword,
         },
       });
-
-      // this.search();
     },
     resetSearch() {
       this.keyword = '';

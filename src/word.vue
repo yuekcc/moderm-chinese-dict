@@ -1,14 +1,8 @@
 <script>
-// import { NPopselect, NButton, NIcon } from 'naive-ui';
-import { OverflowMenuVertical } from '@vicons/carbon';
 import { ActionSheet, Button } from 'vant';
 
 export default {
   components: {
-    // NPopselect,
-    // NButton,
-    // NIcon,
-    OverflowMenuVertical,
     ActionSheet,
     Button,
   },
