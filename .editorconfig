@@ -1,5 +1,5 @@
 root = true
 
-[*.{js,ts,css,scss,less,html}]
+[*.{js,ts,css,scss,less,html,vue}]
 indent_size = 2
 indent_style = space

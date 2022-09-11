@@ -1,13 +1,16 @@
 <script>
-import { NPopselect, NButton, NIcon } from 'naive-ui';
+// import { NPopselect, NButton, NIcon } from 'naive-ui';
 import { OverflowMenuVertical } from '@vicons/carbon';
+import { ActionSheet, Button } from 'vant';
 
 export default {
   components: {
-    NPopselect,
-    NButton,
-    NIcon,
+    // NPopselect,
+    // NButton,
+    // NIcon,
     OverflowMenuVertical,
+    ActionSheet,
+    Button,
   },
   props: {
     word: {
@@ -17,14 +20,15 @@ export default {
   },
   data() {
     return {
-      actions: [{ label: '组词', value: 'get_all_words_with_this_entry' }],
+      actions: [{ name: '组词', value: 'get_all_words_with_this_entry' }],
+      canShowActions: false,
     };
   },
   methods: {
     doAction(key) {
       console.log(key);
 
-      if (key === 'get_all_words_with_this_entry') {
+      if (key.value === 'get_all_words_with_this_entry') {
         this.$router.push({
           name: 'home',
           query: {
@@ -41,16 +45,15 @@ export default {
 <template>
   <div class="word-block">
     <div :data-set-entry="word.entry" v-html="word.paraphrase"></div>
+    <ActionSheet
+      v-model:show="canShowActions"
+      :actions="actions"
+      @select="doAction($event)"
+      cancel-text="关闭"
+      close-on-click-action
+    ></ActionSheet>
     <div class="actions">
-      <n-popselect :options="actions" @update:value="doAction($event)">
-        <n-button text>
-          <template #icon>
-            <n-icon>
-              <OverflowMenuVertical />
-            </n-icon>
-          </template>
-        </n-button>
-      </n-popselect>
+      <Button icon="ellipsis" text size="mini" @click="canShowActions = true" />
     </div>
   </div>
 </template>

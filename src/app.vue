@@ -1,14 +1,11 @@
 <script>
-import { NInputGroup, NInput, NButton, NBackTop } from 'naive-ui';
+import { Search, showToast } from 'vant';
 import Word from './word.vue';
 import { lookupWords } from './api';
 
 export default {
   components: {
-    NInputGroup,
-    NInput,
-    NButton,
-    NBackTop,
+    Search,
     Word,
   },
   data() {
@@ -48,6 +45,7 @@ export default {
       // this.search();
     },
     resetSearch() {
+      this.keyword = '';
       this.searchResult = [];
       this.$router.push({
         name: 'home',
@@ -66,6 +64,9 @@ export default {
 
       this.searchResult = Object.values(filtered);
     },
+    gotoHanziIndex() {
+      showToast('还在开发呢');
+    },
   },
 };
 </script>
@@ -74,23 +75,25 @@ export default {
   <h1 class="mb-20 center" :class="{ 'mt-100': searchResult.length === 0 }">
     现代汉语词典<sub class="prefix">自用版</sub>
   </h1>
-  <div class="center mb-20">
-    <n-input-group class="fill max-55">
-      <n-input
-        v-model:value="keyword"
-        placeholder="输入汉字/词组/成语/句子"
-        @keyup.enter="initSearch"
-        @clear="resetSearch"
-        clearable
-      ></n-input>
-      <n-button @click="initSearch">搜索</n-button>
-    </n-input-group>
+  <div class="center mb-20" style="background: #4fc08d; margin-left: -20px; margin-right: -20px">
+    <Search
+      v-model="keyword"
+      :clearable="true"
+      @clear="resetSearch"
+      @cancel="resetSearch"
+      @search="initSearch"
+      action-text="清空"
+      background="#4fc08d"
+      clear-trigger="always"
+      placeholder="输入汉字/词组/成语/句子"
+      shape="round"
+    />
   </div>
   <div class="center mb-20">
-    <a href="javascript:">按拼音/部首/笔划查字</a>
+    <a href="javascript:" @click="gotoHanziIndex">按拼音/部首/笔划查字</a>
   </div>
   <div v-for="word in searchResult" :key="word.id" class="word-block-container">
     <Word :word="word"></Word>
   </div>
-  <n-back-top :right="50" />
+  <!-- <n-back-top :right="50" /> -->
 </template>

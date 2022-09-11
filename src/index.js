@@ -1,7 +1,11 @@
 import { createApp, h } from 'vue';
 import { createRouter, createWebHashHistory, RouterView } from 'vue-router';
-import App from './app.vue';
+import { Toast, Dialog } from 'vant';
 
+import App from './app.vue';
+import About from './about.vue';
+
+import 'vant/lib/index.css';
 import './styles.less';
 
 const routes = [{ name: 'home', path: '/', component: App }];
@@ -12,8 +16,8 @@ const router = createRouter({
 
 const Root = {
   render() {
-    return h(RouterView);
+    return [h(RouterView), h(About)];
   },
 };
 
-createApp(Root).use(router).mount('#app');
+createApp(Root).use(Toast).use(Dialog).use(router).mount('#app');
