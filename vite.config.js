@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import vuePlugin from '@vitejs/plugin-vue';
 
 export default defineConfig({
+  base: '/public/',
   plugins: [vuePlugin()],
   server: {
     proxy: {

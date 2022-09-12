@@ -2,13 +2,20 @@ mod service;
 
 use dotenvy::dotenv;
 use poem::{
+    endpoint::{EmbeddedFileEndpoint, EmbeddedFilesEndpoint},
     get, handler,
     listener::TcpListener,
     web::{Path, Query},
     Route, Server,
 };
+use rust_embed::RustEmbed;
 use serde::Deserialize;
+
 use service::{cut_words, database_service, EntryList};
+
+#[derive(RustEmbed)]
+#[folder = "dist"]
+pub struct PublicFiles;
 
 #[derive(Debug, Deserialize)]
 struct InferSentenceQuery {
@@ -34,9 +41,16 @@ async fn list_words(Path(hanzi): Path<String>) -> EntryList {
 async fn main() -> Result<(), std::io::Error> {
     dotenv().ok();
 
+    if std::env::var_os("RUST_LOG").is_none() {
+        std::env::set_var("RUST_LOG", "poem=info");
+    }
+    tracing_subscriber::fmt::init();
+
     let app = Route::new()
         .at("/api/infer", get(infer_sentence))
-        .at("/api/hanzi/:entry/words", get(list_words));
+        .at("/api/hanzi/:entry/words", get(list_words))
+        .at("/", EmbeddedFileEndpoint::<PublicFiles>::new("index.html"))
+        .nest("/public", EmbeddedFilesEndpoint::<PublicFiles>::new());
 
     Server::new(TcpListener::bind("127.0.0.1:3000"))
         .run(app)
