@@ -16,9 +16,10 @@ let showMessage = () => {
 <style lang="less">
 .about {
   position: absolute;
-  bottom: 0;
+  bottom: 20px;
   left: 0;
   right: 0;
   padding: 5px;
+  font-size: 12px;
 }
 </style>

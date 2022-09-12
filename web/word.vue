@@ -2,6 +2,7 @@
 import { ActionSheet, Button } from 'vant';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { speak, enableSpeak } from './api';
 
 const props = defineProps({
   word: {
@@ -10,12 +11,19 @@ const props = defineProps({
   },
 });
 
-const actions = ref([{ name: '组词', value: 'get_all_words_with_this_entry' }]);
+const actions = [
+  { name: '组词', value: 'show_phrases', disabled: props.word.entry.length > 1 },
+  { name: '朗读', value: 'speak', disabled: !enableSpeak() },
+];
 const canShowActions = ref(false);
 const router = useRouter();
 
 function doAction(key) {
-  if (key.value === 'get_all_words_with_this_entry') {
+  if (key.value === 'speak') {
+    speak(props.word.entry);
+  }
+
+  if (key.value === 'show_phrases') {
     router.push({
       name: 'home',
       query: {
@@ -37,7 +45,7 @@ function doAction(key) {
       cancel-text="关闭"
       close-on-click-action
     ></ActionSheet>
-    <div v-if="word.entry.length === 1" class="actions">
+    <div class="actions">
       <Button icon="ellipsis" text size="mini" @click="canShowActions = true" />
     </div>
   </div>

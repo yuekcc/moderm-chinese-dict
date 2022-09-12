@@ -70,8 +70,8 @@ watch(
 </script>
 
 <template>
-  <h1 class="mb-20 center" :class="{ 'mt-100': searchResult.length === 0 }">
-    现代汉语词典<sub class="prefix">自用版</sub>
+  <h1 class="mb-40 center" :class="{ 'mt-100': searchResult.length === 0 }">
+    汉语词典
   </h1>
   <div class="center mb-20" style="background: #4fc08d; margin-left: -20px; margin-right: -20px">
     <Search
