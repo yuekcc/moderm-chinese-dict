@@ -1,72 +1,72 @@
-<script>
+<script setup>
 import { Search, showToast } from 'vant';
 import Word from './word.vue';
-import { lookupWords } from './api';
+import { walkSentence, lookupWords } from './api';
+import { watch, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-export default {
-  components: {
-    Search,
-    Word,
-  },
-  data() {
-    return {
-      keyword: null,
-      withins: false,
-      searchResult: [],
-    };
-  },
-  watch: {
-    '$route.query': {
-      handler(newVal) {
-        console.log('update $route.query', newVal);
+const keyword = ref('');
+const loadPhrases = ref(false);
+const searchResult = ref([]);
 
-        const word = newVal?.word || '';
-        this.withins = newVal?.withins || '';
-        if (word === '') {
-          this.keyword = '';
-          this.searchResult = [];
-          return;
-        }
-        this.keyword = word;
-        this.search();
-      },
-      immediate: true,
-    },
-  },
-  methods: {
-    initSearch() {
-      this.$router.push({
-        name: 'home',
-        query: {
-          word: this.keyword,
-        },
-      });
-    },
-    resetSearch() {
-      this.keyword = '';
-      this.searchResult = [];
-      this.$router.push({
-        name: 'home',
-        query: {
-          word: '',
-        },
-      });
-    },
-    async search() {
-      const results = await lookupWords(this.keyword, this.withins);
-      const filtered = results.flat(Infinity).map(it => {
-        // TODO: 后台优化数据
-        it.paraphrase = it.paraphrase.replace(`<link rel="stylesheet" type="text/css" href="现代汉语词典.css">`, '');
-        return it;
-      });
+const router = useRouter();
 
-      this.searchResult = Object.values(filtered);
+async function search() {
+  const load = loadPhrases.value ? lookupWords : walkSentence;
+
+  const results = await load(keyword.value);
+  const filtered = results.flat(Infinity).map(it => {
+    // TODO: 后台优化数据
+    it.paraphrase = it.paraphrase.replace(`<link rel="stylesheet" type="text/css" href="现代汉语词典.css">`, '');
+    return it;
+  });
+
+  searchResult.value = filtered;
+}
+
+function initSearch() {
+  router.push({
+    name: 'home',
+    query: {
+      word: keyword.value,
     },
-    gotoHanziIndex() {
-      showToast('还在开发呢');
+  });
+}
+
+function resetSearch() {
+  router.push({
+    name: 'home',
+    query: {
+      word: '',
     },
+  });
+}
+
+function gotoHanziIndex() {
+  showToast('还在开发呢');
+}
+
+watch(
+  () => router.currentRoute.value.query,
+  val => {
+    const _word = val?.word || '';
+    const _loadPhrases = val?.loadPhrases || false;
+
+    if (_word === '') {
+      keyword.value = '';
+      loadPhrases.value = false;
+      searchResult.value = [];
+      return;
+    }
+
+    keyword.value = _word;
+    loadPhrases.value = _loadPhrases;
+    search();
   },
-};
+  {
+    immediate: true,
+  },
+);
 </script>
 
 <template>
