@@ -4,12 +4,12 @@
   "description": "自家用的汉语词典，核心数据基于《现在汉语词典》第 7 版",
   "icons": [
     {
-      "src": "/public/logo.png",
+      "src": "/public/assets/logo.png",
       "sizes": "300x300",
       "type": "image/png"
     }
   ],
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
