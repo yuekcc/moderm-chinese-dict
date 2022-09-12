@@ -52,7 +52,7 @@ async fn main() -> Result<(), std::io::Error> {
         .at("/", EmbeddedFileEndpoint::<PublicFiles>::new("index.html"))
         .nest("/public", EmbeddedFilesEndpoint::<PublicFiles>::new());
 
-    Server::new(TcpListener::bind("127.0.0.1:3000"))
+    Server::new(TcpListener::bind("127.0.0.1:10088"))
         .run(app)
         .await
 }
