@@ -7,14 +7,14 @@ BIN_NAME=modern_chinese_dict
 BIN_FILE_PATH=target/${BUILD_TARGET}/release/${BIN_NAME}
 
 echo "build web app"
-test -d dist && rm -f dist
+test -d dist && rm -rf dist
 pnpm i
 pnpm build
 
 echo "build server"
 cargo zigbuild --target $BUILD_TARGET --release
 
-if [ -d "target/${BUILD_TARGET}/release" ]
+if [ ! -d "target/${BUILD_TARGET}/release" ]
 then
   echo "Build failed, exit"
   exit 1

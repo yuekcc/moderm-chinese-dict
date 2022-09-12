@@ -8,3 +8,5 @@ node_modules
 /pb_data
 /dist
 /target
+/mcd_install
+mcd_install.*
