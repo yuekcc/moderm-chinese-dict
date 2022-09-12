@@ -21,11 +21,13 @@ then
 fi
 
 echo "make package"
-mkdir -p mcd_install
-test -s .env && cp .env mcd_install/
-test -s $BIN_FILE_PATH && cp $BIN_FILE_PATH mcd_install/
-test -d data && cp -r data mcd_install/
-tar czvf mcd_install.tar.gz mcd_install
+OUTPUT_DIR=mcd_install
+test -d $OUTPUT_DIR && rm -rf $OUTPUT_DIR
+mkdir -p $OUTPUT_DIR
+test -s .env && cp .env $OUTPUT_DIR
+test -s $BIN_FILE_PATH && cp $BIN_FILE_PATH $OUTPUT_DIR
+test -d data && cp -r data $OUTPUT_DIR
+tar czvf mcd_install.tar.gz $OUTPUT_DIR
 
 echo "all done"
 
