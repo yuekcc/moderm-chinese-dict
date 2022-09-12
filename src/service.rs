@@ -14,6 +14,12 @@ pub struct Entry {
     pub paraphrase: String,
 }
 
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, sqlx::FromRow)]
+pub struct PhraseIndex {
+    pub entry: String,
+    pub targets: String,
+}
+
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct EntryList(Vec<Entry>);
 
@@ -49,16 +55,15 @@ impl DbLayer {
 
     pub async fn query_phrases(&self, hanzi: &str) -> Vec<Entry> {
         let mut conn = self.pool.acquire().await.unwrap();
-        let sql = "select entry, paraphrase from mdx where entry like ?";
-        let mut rows = sqlx::query_as::<_, Entry>(sql)
-            .bind(format!("%{hanzi}%"))
-            .fetch(&mut conn);
-        let mut result = vec![];
-        while let Some(row) = rows.try_next().await.unwrap() {
-            result.push(row);
-        }
+        let sql = "select entry, targets from phrase_index where entry = ?";
+        let row = sqlx::query_as::<_, PhraseIndex>(sql)
+            .bind(hanzi)
+            .fetch_one(&mut conn)
+            .await
+            .unwrap();
 
-        result
+        let targets: Vec<&str> = row.targets.split(',').collect();
+        self.query_words(targets).await
     }
 
     pub async fn query_words(&self, keywords: Vec<&str>) -> Vec<Entry> {
