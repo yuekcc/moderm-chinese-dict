@@ -1,13 +1,14 @@
 <script setup>
-import { Search, showToast } from 'vant';
+import { Search, showToast, Icon } from 'vant';
 import Word from './Word.vue';
-import { walkSentence, lookupWords } from './api';
-import { watch, ref } from 'vue';
+import { walkSentence, lookupWords, enableSpeak, speak } from '../api';
+import { watch, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const keyword = ref('');
 const loadPhrases = ref(false);
 const searchResult = ref([]);
+const canReadText = computed(() => enableSpeak());
 
 const router = useRouter();
 
@@ -46,6 +47,13 @@ function gotoHanziIndex() {
   showToast('还在开发呢');
 }
 
+function readText() {
+  const text = keyword.value;
+  if (text) {
+    speak(keyword.value);
+  }
+}
+
 watch(
   () => router.currentRoute.value.query,
   val => {
@@ -70,9 +78,7 @@ watch(
 </script>
 
 <template>
-  <h1 class="mb-40 center" :class="{ 'mt-100': searchResult.length === 0 }">
-    汉语词典
-  </h1>
+  <h1 class="mb-40 center" :class="{ 'mt-100': searchResult.length === 0 }">汉语词典</h1>
   <div class="center mb-20" style="background: #4fc08d; margin-left: -20px; margin-right: -20px">
     <Search
       v-model="keyword"
@@ -84,8 +90,15 @@ watch(
       background="#4fc08d"
       clear-trigger="always"
       placeholder="输入汉字/词组/成语/句子"
+      :show-action="canReadText"
       shape="round"
-    />
+    >
+      <template #action>
+        <div @click="readText">
+          <Icon name="volume-o" color="#fff" />
+        </div>
+      </template>
+    </Search>
   </div>
   <div class="center mb-20">
     <a href="javascript:" @click="gotoHanziIndex">按拼音/部首/笔划查字</a>

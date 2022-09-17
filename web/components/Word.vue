@@ -2,7 +2,7 @@
 import { ActionSheet, Button } from 'vant';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { speak, enableSpeak } from './api';
+import { speak, enableSpeak } from '../api';
 
 const props = defineProps({
   word: {
@@ -13,7 +13,7 @@ const props = defineProps({
 
 const actions = [
   { name: '组词', value: 'show_phrases', disabled: props.word.entry.length > 1 },
-  { name: '朗读', value: 'speak', disabled: !enableSpeak() },
+  { name: '朗读', value: 'speak', disabled: !enableSpeak(), subname: !enableSpeak() ? '当前浏览器不支持' : '' },
 ];
 const canShowActions = ref(false);
 const router = useRouter();

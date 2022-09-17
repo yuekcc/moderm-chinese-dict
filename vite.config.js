@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import vuePlugin from '@vitejs/plugin-vue';
 
 export default defineConfig({
-  base: '/public/',
+  base: process.env.NODE_ENV === 'development' ? '/' : '/public/',
   plugins: [vuePlugin()],
   build: {
     manifest: false,
