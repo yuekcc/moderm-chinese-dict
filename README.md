@@ -1,16 +1,25 @@
-# 自用的汉语词典
+# 汉语词典
 
 ## 声明
 
-此资源仅供学习和交流，禁止商用，请务必于下载试用后 24 小时内删除。数据源自 [bamboo512/ModernChineseDict](https://github.com/bamboo512/ModernChineseDict)，由爱好者维护。毕竟是非官方的数据源，会存在数据错误。如发现错误数据，请参考商务印书馆出版的《现代汉语词典》。如果可能，也请反馈社区。
+此资源仅供学习和交流，禁止商用，请务必于下载试用后 24 小时内删除。数据源自多个开源项目。毕竟是非官方的数据源，会存在数据错误。如有疑问或不同意见，请以你为准。若使用了本项目的代码或内置的源自其他开源项目的数据而产生问题或纠纷，概不负责。
 
-此资源仅供学习和交流，禁止商用，请务必于下载试用后 24 小时内删除。本应用是开源软件。若使用了这些代码产生问题或纠纷，概不负责。
+## 感谢
 
-若阁下觉得《现代汉语词典》很不错，请支持官方 App（[IOS][ios]/[Android][android]）
+本应用使用了多个开源软件作为数据源：
 
-[ios]: https://apps.apple.com/cn/app/%E7%8E%B0%E4%BB%A3%E6%B1%89%E8%AF%AD%E8%AF%8D%E5%85%B8-%E4%B8%80%E9%83%A8%E4%B9%85%E4%BA%AB%E7%9B%9B%E8%AA%89%E7%9A%84%E8%A7%84%E8%8C%83%E6%80%A7%E8%AF%8D%E5%85%B8/id1330896529
-[android]: https://www.baidu.com/s?wd=%E7%8E%B0%E4%BB%A3%E6%B1%89%E8%AF%AD%E8%AF%8D%E5%85%B8%20app&rsv_spt=1&rsv_iqid=0xa15bc0f100284206&issp=1&f=8&rsv_bp=1&rsv_idx=2&ie=utf-8&rqlang=cn&tn=baiduhome_pg&rsv_enter=1&rsv_dl=tb&oq=%25E7%258E%25B0%25E4%25BB%25A3%25E6%25B1%2589%25E8%25AF%25AD%25E8%25AF%258D%25E5%2585%25B8&rsv_btype=t&inputT=1665&rsv_t=4ed3WInyiVHfyLHQdrQ9UMUq1UkHCaoAiPCpSZ%2FnTDNiJhFc7Kwwf5AwgcFpxorEZdMX&rsv_sug3=37&rsv_sug1=11&rsv_sug7=100&rsv_pq=aef584900022b4f3&rsv_sug2=0&rsv_sug4=1717
+- [theajack/cnchar](https://github.com/theajack/cnchar) 偏旁部首数据
+- [bamboo512/ModernChineseDict](https://github.com/bamboo512/ModernChineseDict) 词典数据
+- [jaywcjlove/table-of-general-standard-chinese-characters](https://github.com/jaywcjlove/table-of-general-standard-chinese-characters) 拼音数据
+
+## 构建
+
+环境要求：node v16、pnpm v7、rust 1.63、cargo 1.63。构建过程请见 `build.sh`。
+
+## 部署
+
+构建成功后，会创建 `mcd_install` 目录，启动 `mcd_install` 目录下的 `modern_chinese_dict` 即可启动后台服务，默认只监听 `127.0.0.1:10088`。通过 `.env` 文件可以配置 `dict.db` 的目录。
 
 # 协议
 
-MIT
+代码部分采用 MIT；数据，包括但不限于 JSON 格式数据、sqlite 数据库等格式的数据，按原作者许可。
