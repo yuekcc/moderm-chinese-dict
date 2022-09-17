@@ -12,7 +12,7 @@ function onClickLeft() {
 </script>
 
 <template>
-  <NavBar title="查找汉字" left-text="返回" left-arrow @click-left="onClickLeft"></NavBar>
+  <NavBar title="查字" left-text="返回" left-arrow @click-left="onClickLeft"></NavBar>
   <Tabs v-bind:active="currentTab">
     <Tab title="部首" name="radical">
       <RadicalIndexVue></RadicalIndexVue>

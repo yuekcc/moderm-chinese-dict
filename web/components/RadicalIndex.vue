@@ -80,7 +80,8 @@ function lookupHanzi(hanzi) {
     cursor: pointer;
 
     &:hover {
-      background-color: yellowgreen;
+      background-color: var(--green);
+      color: var(--white);
     }
   }
 }

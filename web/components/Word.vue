@@ -1,6 +1,6 @@
 <script setup>
 import { ActionSheet, Button } from 'vant';
-import { ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { speak, enableSpeak } from '../api';
 
@@ -15,8 +15,9 @@ const actions = [
   { name: '组词', value: 'show_phrases', disabled: props.word.entry.length > 1 },
   { name: '朗读', value: 'speak', disabled: !enableSpeak(), subname: !enableSpeak() ? '当前浏览器不支持' : '' },
 ];
-const canShowActions = ref(false);
 const router = useRouter();
+const canShowActions = ref(false);
+const wordDetailsRef = ref(null);
 
 function doAction(key) {
   if (key.value === 'speak') {
@@ -33,11 +34,35 @@ function doAction(key) {
     });
   }
 }
+
+function handleChildrenClick(e) {
+  console.log(handleChildrenClick, e.target);
+
+  // 点击了类似 〖东汉〗 的元素
+  if (e.target.tagName === 'SPAN' && e.target.classList.contains('smb')) {
+    const word = e.target.textContent.trim().replace(/^〖/g, '').replace(/〗$/g, '');
+    if (word) {
+      router.push({
+        name: 'home',
+        query: {
+          word,
+        },
+      });
+    }
+  }
+}
+
+onMounted(() => {
+  wordDetailsRef.value?.addEventListener('click', handleChildrenClick);
+});
+onBeforeUnmount(() => {
+  wordDetailsRef.value?.removeEventListener('click', handleChildrenClick);
+});
 </script>
 
 <template>
   <div class="word-block">
-    <div :data-set-entry="word.entry" v-html="word.paraphrase"></div>
+    <div :data-set-entry="word.entry" v-html="word.paraphrase" ref="wordDetailsRef"></div>
     <ActionSheet
       v-model:show="canShowActions"
       :actions="actions"
@@ -54,6 +79,15 @@ function doAction(key) {
 <style lang="less">
 .word-block {
   position: relative;
+
+  .smb {
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--green);
+      color: var(--white);
+    }
+  }
 }
 
 .actions {
