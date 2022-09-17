@@ -44,7 +44,8 @@ function resetSearch() {
 }
 
 function gotoHanziIndex() {
-  showToast('还在开发呢');
+  // showToast('还在开发呢');
+  router.push({ name: 'indexes' });
 }
 
 function readText() {
@@ -78,33 +79,34 @@ watch(
 </script>
 
 <template>
-  <h1 class="mb-40 center" :class="{ 'mt-100': searchResult.length === 0 }">汉语词典</h1>
-  <div class="center mb-20" style="background: #4fc08d; margin-left: -20px; margin-right: -20px">
-    <Search
-      v-model="keyword"
-      :clearable="true"
-      @clear="resetSearch"
-      @cancel="resetSearch"
-      @search="initSearch"
-      action-text="清空"
-      background="#4fc08d"
-      clear-trigger="always"
-      placeholder="输入汉字/词组/成语/句子"
-      :show-action="canReadText"
-      shape="round"
-    >
-      <template #action>
-        <div @click="readText">
-          <Icon name="volume-o" color="#fff" />
-        </div>
-      </template>
-    </Search>
+  <div style="padding: 20px">
+    <h1 class="mb-40 center" :class="{ 'mt-100': searchResult.length === 0 }">汉语词典</h1>
+    <div class="center mb-20" style="background: #4fc08d; margin-left: -20px; margin-right: -20px">
+      <Search
+        v-model="keyword"
+        :clearable="true"
+        @clear="resetSearch"
+        @cancel="resetSearch"
+        @search="initSearch"
+        action-text="清空"
+        background="#4fc08d"
+        clear-trigger="always"
+        placeholder="输入汉字/词组/成语/句子"
+        :show-action="canReadText"
+        shape="round"
+      >
+        <template #action>
+          <div @click="readText">
+            <Icon name="volume-o" color="#fff" />
+          </div>
+        </template>
+      </Search>
+    </div>
+    <div class="center mb-20">
+      <a href="javascript:" @click="gotoHanziIndex">按拼音/部首/笔划查字</a>
+    </div>
+    <div v-for="word in searchResult" :key="word.id" class="word-block-container">
+      <Word :word="word"></Word>
+    </div>
   </div>
-  <div class="center mb-20">
-    <a href="javascript:" @click="gotoHanziIndex">按拼音/部首/笔划查字</a>
-  </div>
-  <div v-for="word in searchResult" :key="word.id" class="word-block-container">
-    <Word :word="word"></Word>
-  </div>
-  <!-- <n-back-top :right="50" /> -->
 </template>

@@ -43,7 +43,7 @@ function _speak(text, opts = speakDefaultOptions) {
 }
 
 export function enableSpeak() {
-  return window.SpeechSynthesisUtterance && window.speechSynthesis;
+  return !!(window.SpeechSynthesisUtterance && window.speechSynthesis);
 }
 
 export function speak(text) {
