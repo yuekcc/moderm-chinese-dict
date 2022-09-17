@@ -1,6 +1,6 @@
 <script setup>
 import { Search, showToast } from 'vant';
-import Word from './word.vue';
+import Word from './Word.vue';
 import { walkSentence, lookupWords } from './api';
 import { watch, ref } from 'vue';
 import { useRouter } from 'vue-router';

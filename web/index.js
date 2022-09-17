@@ -2,8 +2,8 @@ import { createApp, h } from 'vue';
 import { createRouter, createWebHashHistory, RouterView } from 'vue-router';
 import { Toast, Dialog } from 'vant';
 
-import App from './app.vue';
-import About from './about.vue';
+import App from './components/App.vue';
+import About from './components/About.vue';
 
 import 'vant/lib/index.css';
 import './styles.less';
